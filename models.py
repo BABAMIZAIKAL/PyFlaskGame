@@ -30,17 +30,9 @@ class User(Base):
     def get_id(self):
     	return self.login_id
         
-class Topic(Base):
-	__tablename__ = 'topic'
+class Lobby(Base):
+	__tablename__ = 'lobby'
 	id = Column(Integer, primary_key=True)
-	title = Column(String(80), unique=True, nullable=False)
-	description = Column(String(250), unique=True, nullable=False)
-		
-class Post(Base):
-	__tablename__ = 'post'
-	id = Column(Integer, primary_key=True)
-	username = Column(Integer, ForeignKey('users.id'))
-	topic_id = Column(Integer, ForeignKey('topic.id'))
-	title = Column(String(80), unique=True, nullable=False)
-	description = Column(String(250), unique=True, nullable=False)
-	date = Column(DateTime, default=datetime.now())	
+	user1 = Column(String(250), unique=True, nullable=False)
+	user2 = Column(String(250), unique=True, nullable=True)
+

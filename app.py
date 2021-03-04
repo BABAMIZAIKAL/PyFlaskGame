@@ -12,7 +12,7 @@ from datetime import datetime, date
 
 from database import db_session, init_db
 from login import login_manager
-from models import User
+from models import User, Lobby
 
 
 app = Flask(__name__)
@@ -34,7 +34,19 @@ def profile():
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
 	if request.method == 'GET':
-		return render_template('homepage.html')
+		return render_template('homepage.html', user=current_user, lobbies = Lobby.query.all())
+		
+@app.route('/create_lobby', methods=['GET', 'POST'])
+@login_required
+def create_lobby():
+	if request.method == 'POST':
+		
+		user = request.form['user']
+
+		lobby = Lobby(user1=user)
+		db_session.add(lobby)
+		db_session.commit()
+		return redirect(url_for('profile'))
 		
 @app.route('/register', methods=['GET', 'POST'])
 def register():
