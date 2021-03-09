@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship, aliased
 from sqlalchemy.sql.expression import func
 from datetime import datetime
-
 from database import Base
 
 class User(Base):
@@ -31,8 +30,10 @@ class User(Base):
     	return self.login_id
         
 class Lobby(Base):
-	__tablename__ = 'lobby'
-	id = Column(Integer, primary_key=True)
-	user1 = Column(String(250), unique=True, nullable=False)
-	user2 = Column(String(250), unique=True, nullable=True)
-
+    __tablename__ = 'lobby'
+    id = Column(Integer, primary_key=True)
+    user1 = Column(Integer, unique=False, nullable=False)
+    user2 = Column(Integer, unique=False, nullable=True)
+    gameState = Column(String(15), unique=False, nullable=False)
+    
+ 
