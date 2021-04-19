@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-center mt-2">
+    <div class="col-md-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-4 game">
+                    <div>
+                    {% for lobby_type in game_types %}
+                        <h1 class="game-title"> {{lobby_type}}</h1>
+                        <div class="lobbies">
+                            <div class="header">
+                                Lobbies
+                                <button onClick="new_lobby(&quot;{{lobby_type}}&quot;)" class="btn btn-success new">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+                                    </svg>
+                                    New lobby
+                                </button>
+                            </div>
+                            <div class="lobby">
+                                {% if current_user.is_authenticated %}
+                                    <button class="btn btn-primary lobby-join" onclick = "window.location.href='/code/{{lobby_type.lower()}}'">Join lobby</button>
+                                {% else %}
+                                    <button class="btn btn-primary lobby-join" onclick = "window.location.href='/login'">Join lobby</button>
+                                {% endif %}
+                            </div>
+                        <script>
+                            function new_lobby(a){
+                                console.log(a)
+                                $.post(window.location.href, {"lobby type" : a.toLowerCase()},  function(data){
+                                    if(data['id'] == -1){
+                                        window.location.href = window.location.href + '/login';
+                                    }
+                                    else{
+                                        console.log(data)
+                                        window.location.href = window.location.href + 'lobby/' + data['lobby_type'] +'/' + data['lobby_id'].toString();
+                                    }
+                                })
+                            }
+                        </script>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="col-4 game">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

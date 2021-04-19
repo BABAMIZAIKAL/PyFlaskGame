@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+Scoreboards
+{% endblock %}
+
+{% block body %}
+<main>
+  <table style="margin-left: 100px; margin-top: 100px;">
+  <tr>
+    <th>User name</th>
+    <th>TicTacToePoints</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td>{{user.username}}</td>
+    <td>{{user.score_tictactoe}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<table style="margin-left: 400px; margin-top: 100px;">
+  <tr>
+    <th>User name</th>
+    <th>HangmanPoints</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td>{{user.username}}</td>
+    <td>{{user.score_hangman}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<table style="margin-left: 400px; margin-top: 100px;">
+  <tr>
+    <th>User name</th>
+    <th>All Points</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td>{{user.username}}</td>
+    <td>{{user.score_tictactoe + user.score_hangman}}</td>
+  </tr>
+  {% endfor %}
+</table>
+</main>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Hangman Lobby {{lobby_id}}{% endblock %}
+{% block style %}
+$white: #fff;
+canvas{
+    color:$white;
+    border: $white dashed 2px;
+    padding:15px;
+}
+{% endblock %}
+{% block body %}
+    <div class="wrapper">
+        <h1>Hangman</h1>
+        <h2 class="players" align="center"></h2>
+        <p>Use the alphabet below to guess the word, or click hint to get a clue. </p>
+    </div>
+    <div id = "popupForm" style = "display : none;">
+        <div class="form-group">
+            <label for="Word">Word</label>
+            <input type="text" name="Word" class="form-control" placeholder="word here" id = "word" required />
+            <label for="Hint">Word</label>
+            <input type="text" name="Hint" class="form-control" placeholder="hint here" id = "hintt"/>
+        </div>
+        <button class="btn btn-primary lobby-join" onclick = "closeTheForm()">Submit</button>
+    </div>
+    <div class="wrapper">
+        <div id="buttons"></div>  
+        <div id="hold"></div>
+        <p id="mylives"></p>
+        <p id="clue">Clue -</p>  
+        <canvas id="stickman">This Text will show if the Browser does NOT support HTML5 Canvas tag</canvas>
+        <div class="container">
+            <button id="hint">Hint</button>
+            <button id="reset">Play again</button>
+        </div>
+    </div>
+    <script src = "../../static/js/hangman.js"></script>
+    <script>
+        function closeTheForm(){
+            document.getElementById("popupForm").style.display = "none";
+            wordHolder = document.getElementById('hold');
+            correct = document.createElement('ul');
+            word = document.getElementById("word").value;
+            for (var i = 0; i < word.length; i++) {
+                correct.setAttribute('id', 'my-word');
+                guess = document.createElement('li');
+                guess.setAttribute('class', 'guess');
+                if (word[i] === " ") {
+                    guess.innerHTML = " ";
+                    space = 1;
+                } else {
+                    guess.innerHTML = "_";
+                }
+
+                guesses.push(guess);
+                wordHolder.appendChild(correct);
+                correct.appendChild(guess);
+            }
+            console.log(word);
+        }
+    </script>
+{% endblock %}

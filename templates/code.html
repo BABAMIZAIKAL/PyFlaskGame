@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Join a lobby
+{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-3">
+        <h1>Enter code</h1>
+        <form method="POST" action="/code/{{lobby_type}}">
+            <div class="form-group">
+                <label for="exampleInputUsername">Your code</label>
+                <input type="text" name="code" class="form-control" placeholder="code" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
