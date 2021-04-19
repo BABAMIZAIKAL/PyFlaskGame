@@ -71,7 +71,6 @@ migrate = Migrate(app, SQLAlchemy(app))
 
 salt = "PZ1Rtqrul5kECoKh"
 
-
 @app.teardown_appcontext
 def shutdown_context(exception=None):
 	db_session.remove()
@@ -79,6 +78,7 @@ def shutdown_context(exception=None):
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
 	if request.method == 'GET':
+
 		return render_template('profile.html', user=current_user, directory = "../")
 
 @app.route('/scoreboard', methods=['GET', 'POST'])
@@ -86,7 +86,6 @@ def scoreboard():
 	if request.method == 'GET':
 		return render_template('scoreboard.html', users=User.query.order_by(desc(User.score_tictactoe)), directory = "../")
 	
-		
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	if request.method == 'GET':
@@ -203,8 +202,6 @@ def on_join(data):
 		handleLobbyUpdate(data['lobby type'], data['room'] // 10, current_user.id)
 		curr_lobby = handleQueryLobbyType(data['lobby type'], data['room'] // 10)
 		emit("start", {"user1" : handleQueryUser(curr_lobby.user1).username, "user2" : handleQueryUser(curr_lobby.user2).username},room=room_id)
-		
-
 
 @socketio.on('move')
 def on_move(data):
