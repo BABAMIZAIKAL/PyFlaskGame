@@ -12,7 +12,8 @@ class User(Base):
     login_id = Column(String(36), nullable=True)
     score_tictactoe = Column(Integer, unique=False, nullable=False, default=0)
     score_hangman = Column(Integer, unique=False, nullable=False, default=0)
-
+    score = Column(Integer, unique=False, nullable=False, default=0)
+    
     @property
     def is_authenticated(self):
         return True

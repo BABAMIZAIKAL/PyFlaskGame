@@ -21,8 +21,8 @@ var socket = io('localhost:5000');
 socket.on('connect', function() {
     socket.emit('join', {'room': 10 * lobby_id + 2, 'lobby type': lobby_type});
 });
-var hint = "No hint provided."; 
-
+var clue = "No hint provided."; 
+var hint = document.getElementById("hint");
 // Get elements
 var showLives = document.getElementById("mylives");
 var getHint = document.getElementById("hint");
@@ -53,11 +53,14 @@ comments = function () {
     if (lives < 1) {
         showLives.innerHTML = "Game Over";
     }
-    for (var i = 0; i < guesses.length; i++) {
-        if (counter + space === guesses.length) {
-            showLives.innerHTML = "You Win!";
-        }
-    }
+	if (counter + space === guesses.length) {
+	    gameActive = false;
+	    showLives.innerHTML = myName + " Win!";
+	    if(me){
+			socket.emit("win",{"lobby type" : lobby_type, "player" : myName})
+	    }
+	    return;
+	}
 }
 
 // Animate man
@@ -153,7 +156,8 @@ init = function () {
         while(!word.localeCompare("Default")){
             if(document.getElementById("popupForm").style.display.localeCompare("none")){
                 word = document.getElementById("word").value.toLowerCase();
-                if(document.getElementById("hintt").value.length){
+                console.log(document.getElementById("hintt").value.length);
+                if(document.getElementById("hintt").value.length !== 0){
                     hint = document.getElementById("hintt").value;
                 }
                 break;
@@ -166,7 +170,7 @@ hint.onclick = function() {
     if(!gameActive || !me){
         return;
     }
-    showClue.innerHTML = "Clue: - " +  hint;
+    showClue.innerHTML = "Clue: - " +  clue;
 };
    
 // Reset
@@ -177,7 +181,9 @@ document.getElementById('reset').onclick = function() {
 
 //socket 
 socket.on("start", function(data){
+    
     if(me){
+        document.getElementById("popupForm").remove();
         console.log("ok");
         guesses = [ ];
         lives = 10;
@@ -187,22 +193,26 @@ socket.on("start", function(data){
         comments();
         canvas();
     }
+    document.getElementsByClassName("flashes")[0].remove();
     document.querySelectorAll('.players')[0].innerHTML = data["user1"] + " vs " + data["user2"];
-    gameActive = true;
+    gameActive = me;
     myName = data["user2"];
     console.log("kekw");
+    gameState = word + ";" + hint;
+    console.log(gameState);
     if(!me){
-        gameState = word + ";" + hint;
-        console.log(gameState);
-        socket.emit("move", {'lobby type': lobby_type, 'room': 10 * lobby_id + 1, 'gameState':gameState, 'player' : myName});
+        socket.emit("move", {'lobby type': lobby_type, 'room': 10 * lobby_id + 2, 'gameState':gameState, 'player' : myName});
     }
 })
 
 socket.on("move", function(data){
     console.log(word)
-    if(data['gameState'].split(";").length === 2){
+    console.log(data['gameState'].split(";").length)
+    if(data['gameState'].split(";").length === 2 && me){
         word = data['gameState'].split(";")[0];
         hint = data['gameState'].split(";")[1];
+        wordHolder = document.getElementById('hold');
+        correct = document.createElement('ul');
         for (var i = 0; i < word.length; i++) {
             correct.setAttribute('id', 'my-word');
             guess = document.createElement('li');
@@ -245,6 +255,7 @@ socket.on("move", function(data){
 
 socket.on("you first", function(data){
     me = false;
+    document.getElementsByClassName("flashes")[0].style.display = "none";
     console.log("ok");
     guesses = [ ];
     lives = 10;

@@ -78,14 +78,14 @@ def shutdown_context(exception=None):
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
 	if request.method == 'GET':
-
 		return render_template('profile.html', user=current_user, directory = "../")
 
 @app.route('/scoreboard', methods=['GET', 'POST'])
 def scoreboard():
 	if request.method == 'GET':
-		return render_template('scoreboard.html', users=User.query.order_by(desc(User.score_tictactoe)), directory = "../")
+		return render_template('scoreboard.html', users=User.query.order_by(desc(User.score_tictactoe)), users_hangman=User.query.order_by(desc(User.score_hangman)), users_score=User.query.order_by(desc(User.score)),  directory = "../")
 	
+		
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	if request.method == 'GET':
@@ -202,7 +202,7 @@ def on_join(data):
 		handleLobbyUpdate(data['lobby type'], data['room'] // 10, current_user.id)
 		curr_lobby = handleQueryLobbyType(data['lobby type'], data['room'] // 10)
 		emit("start", {"user1" : handleQueryUser(curr_lobby.user1).username, "user2" : handleQueryUser(curr_lobby.user2).username},room=room_id)
-
+		
 @socketio.on('move')
 def on_move(data):
 	room_id = data['room']
@@ -224,8 +224,10 @@ def on_win(data):
 	user = User.query.filter_by(username=data['player']).first()
 	if data["lobby type"] == "tictactoe":
 		user.score_tictactoe += 1
+		user.score += 1
 	elif data["lobby type"] == "hangman":
 		user.score_hangman += 1
+		user.score += 1
 	db_session.commit()
 #prototip, oshte ne bachka
 #@socketio.on('reset')
