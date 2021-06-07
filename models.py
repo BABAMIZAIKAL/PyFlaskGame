@@ -51,3 +51,10 @@ class TicTacToeLobby(Lobby):
     
 class HangmanLobby(Lobby):
     __tablename__ = 'hangmanlobby'
+
+
+class CAHLobby(Lobby):
+    __tablename__ = 'cahlobby'
+    user3 = Column(Integer, unique=False, nullable=True)
+    user4 = Column(Integer, unique=False, nullable=True)
+    user5 = Column(Integer, unique=False, nullable=True)

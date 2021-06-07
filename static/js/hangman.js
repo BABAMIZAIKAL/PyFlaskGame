@@ -17,7 +17,8 @@ var gameState = "";
 const lobby_id = parseInt(location.href.split("/")[location.href.split("/").length-1])
 const lobby_type = location.href.split("/")[location.href.split("/").length-2]
 
-var socket = io('localhost:5000');
+console.log(location.href.split("/")[2])
+var socket = io();
 socket.on('connect', function() {
     socket.emit('join', {'room': 10 * lobby_id + 2, 'lobby type': lobby_type});
 });

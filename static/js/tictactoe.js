@@ -2,7 +2,6 @@
 const statusDisplay = document.querySelector('.game--status');
 
 let gameActive = false;
-let gametype = "tictactoe"
 let me = 'O';
 let gameState = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 let myTurn = false;
@@ -15,7 +14,7 @@ const currentPlayerTurn = () => `It's ${currentPlayerName}'s turn`;
 const lobby_id = parseInt(location.href.split("/")[location.href.split("/").length-1])
 const lobby_type = location.href.split("/")[location.href.split("/").length-2]
 
-var socket = io('localhost:5000');
+var socket = io();
 socket.on('connect', function() {
     socket.emit('join', {'room': 10*lobby_id + 1, 'lobby type': lobby_type});
 });
@@ -86,11 +85,10 @@ function handleCellClick(clickedCellEvent) {
     const clickedCell = clickedCellEvent.target;
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
     if (gameState[clickedCellIndex] !== " " || !gameActive || !myTurn) {
-        console.log(players[1]);
         return;
     }
     gameState[clickedCellIndex] = me;
-    socket.emit("move", {'lobby type': gametype, 'room': 10 * lobby_id + 1, 'gameState':gameState, "me":me, "player":currentPlayerName});
+    socket.emit("move", {'lobby type': lobby_type, 'room': 10 * lobby_id + 1, 'gameState':gameState, "me":me, "player":currentPlayerName});
     //handleCellPlayed(clickedCell, clickedCellIndex);
     //handleGameState(data[gameState].split());
     //gameState = data[gameState].split()
