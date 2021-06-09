@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}Cards against humanity{% endblock %}
+{% block style %}
+    .karti li {
+            display: inline;
+            float: left;
+            height: 90%;
+            width: 15%;
+            padding-left: 1%;
+        }
+        .kartawhite{
+            height: 100%;
+            width: 100%;
+            color:black;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: white;
+            border-collapse: separate;
+            border-spacing: 5px;
+
+        }
+        .kartablack{
+            height: 100%;
+            width: 100%;
+            color: white;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: black;
+            border-collapse: separate;
+            border-spacing: 5px;
+        }
+        .inside{
+            height: 90%;
+            width: 90%;
+            margin-left: 4%;
+            margin-top: 1%;
+        }
+        body{
+            bgcolor: lightgray;
+        }
+{% endblock %}
+{% block body %}
+<div class = "karti" style = "position:fixed; top:10%; left:5%; height:30%; width: 70%;">
+
+    <ul style = "list-style-type: none;display: inline; float: left;height:100%; width:100%" id = "playing field">
+        <li>
+            <div class = "kartablack">
+                <div class = "inside" id = "1">
+
+                </div>
+
+            </div>
+        </li>
+
+    </ul>
+</div>
+
+<div class = "karti" style = "position:fixed; top:43%; left:5%; height:30%; width: 70%;">
+
+    <ul style = "list-style-type: none;display: inline; float: left;height:100%; width:100%"  id="mycards">
+
+    </ul>
+</div>
+
+<div style = "position:fixed; bottom:0; left:0;">
+    <hr>
+    <ul style = "list-style-type: none;">
+        <li id = 'user1'>
+            {{user1}}
+        </li>
+        <li id = 'user2'>
+            {{user2}}
+        </li>
+        <li id = 'user3'>
+            {{user3}}
+        </li>
+        <li id = 'user4'>
+            {{user4}}
+        </li>
+        <li id = 'user5'>
+            {{user5}}
+        </li>
+        <hr>
+        <br>
+    </ul>
+</div>
+<div style = "position:fixed; bottom:0; right:10%;">
+    <hr>
+    <ul style = "list-style-type: none;">
+        <li id = 'score1'>
+            points: <i>0</i>
+        </li>
+        <li id = 'score2'>
+            points: <i>0</i>
+        </li>
+        <li id = 'score3'>
+            points: <i>0</i>
+        </li>
+        <li id = 'score4'>
+            points: <i>0</i>
+        </li>
+        <li id = 'score5'>
+            points: <i>0</i>
+        </li>
+    </ul>
+    <hr>
+    <br>
+</div>
+<script src = "../../static/js/cah.js"></script>
+{% endblock %}
+
