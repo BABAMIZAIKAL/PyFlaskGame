@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 var winningscore = 2;
 var myhand = [];
 var somebodywon = false;
 var carddeck = ["pesho", "asdf", "bashtami", "lelkekw", "OwO", "the jews", "black people"];
 var myscore = 0
+=======
+var myhand = [];
+var carddeck = ["pesho", "asdf", "bashtami", "lelkekw", "OwO"];
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
 for(let i = 0; i < 100; i++){
     carddeck.push("a");
 }
@@ -11,8 +16,12 @@ var mycard = 'penisa na bashtati'
 var owner = false;
 var czar = false;
 var want10white = true;
+<<<<<<< HEAD
 var wantwhite = false;
 var ongoing = false;
+=======
+var wantwhite = true;
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
 var last = 0;
 var playedalready = true;
 var czarpicking = false
@@ -31,6 +40,7 @@ const lobby_id = parseInt(location.href.split("/")[location.href.split("/").leng
 const lobby_type = location.href.split("/")[location.href.split("/").length-2];
 const room_id = 10 * lobby_id + 3
 
+<<<<<<< HEAD
 function disableConsole(){
     document.addEventListener("contextmenu", function(e){
         e.preventDefault();
@@ -47,6 +57,8 @@ function disableConsole(){
 
 //disableConsole();
 
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
 function shuffle(array) {
   var currentIndex = array.length,  randomIndex;
 
@@ -68,13 +80,19 @@ function shuffle(array) {
 
 var socket = io();
 socket.on('connect', function() {
+<<<<<<< HEAD
     if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     socket.emit('cahjoin', {'room': room_id, 'lobby type': lobby_type});
     socket.emit('want10white', {'room': room_id})
 });
 
 socket.on('czar', function(data){
+<<<<<<< HEAD
 if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
 console.log(myid)
 console.log(data['czar'])
     if(myid != data['czar'] + 1){
@@ -82,6 +100,7 @@ console.log(data['czar'])
     }
     console.log(1)
     czar = true;
+<<<<<<< HEAD
     setTimeout(function(){
     console.log('realno go praim')
         if(document.getElementById('playing field').children.length == 1) socket.emit('nikoi ne igra deeba', {'room': room_id, 'new czar': (myid) % last})
@@ -91,6 +110,26 @@ console.log(data['czar'])
 
 socket.on('you first', function(data){
     if(somebodywon) return;
+=======
+    myid = data['czar'] + 1
+    let button = document.createElement('button');
+    button.id = "izbor";
+    button.style.position = 'fixed';
+    button.style.bottom = "30";
+    button.style.left = "30";
+    button.style.width = "5%";
+    button.style.height = "5%";
+    button.innerHTML = "Izbiram";
+    button.onclick = function(event){
+        socket.emit('dai da izbiram', {'room': room_id});
+        document.getElementById("izbor").remove();
+
+    }
+    document.body.appendChild(button);
+})
+
+socket.on('you first', function(data){
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     if(owner) return;
     owner = true;
     czar = true;
@@ -107,6 +146,23 @@ socket.on('you first', function(data){
         if(!startable) return;
         socket.emit('cahstart', {'room': room_id});
         let newbutton = document.createElement('button');
+<<<<<<< HEAD
+=======
+        console.log(newbutton)
+        newbutton.id = "izbor";
+        newbutton.style.position = 'fixed';
+        newbutton.style.bottom = "30";
+        newbutton.style.left = "30";
+        newbutton.style.width = "5%";
+        newbutton.style.height = "5%";
+        newbutton.innerHTML = "Izbiram";
+        newbutton.onclick = function(event){
+            socket.emit('dai da izbiram', {'room': room_id});
+            document.getElementById("izbor").remove();
+        }
+        document.body.appendChild(newbutton);
+        console.log('ok wrat')
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
         document.getElementById("start").remove();
 
     }
@@ -117,7 +173,10 @@ socket.on('you first', function(data){
 })
 
 socket.on('update users', function(data){
+<<<<<<< HEAD
         if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
         console.log('here1')
 
         document.getElementById('user1').innerHTML = data['user1'];
@@ -166,10 +225,15 @@ socket.on('update users', function(data){
 })
 
 socket.on('start', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
     let mycards = document.getElementById('mycards');
     for(const card of myhand){
 
+=======
+    let mycards = document.getElementById('mycards');
+    for(const card of myhand){
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
         let li = document.createElement('li');
         let divkarta = document.createElement('div');
         divkarta.classList.add("kartawhite");
@@ -184,6 +248,7 @@ socket.on('start', function(data){
             wantwhite = true;
             socket.emit('played white', {'room': room_id, 'white': divinside.innerHTML});
             playedalready = true;
+<<<<<<< HEAD
             mycard = divinside.innerHTML;
             console.log(mycard)
             li.remove();
@@ -192,11 +257,19 @@ socket.on('start', function(data){
         };
         mycards.appendChild(li);
 
+=======
+            li.remove();
+            mycard = divinside.innerHTML;
+
+        };
+        mycards.appendChild(li);
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     }
 
 })
 
 socket.on('new round', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
     if(!czar)playedalready = false;
     document.getElementById("1").innerHTML = data["black"];
@@ -211,6 +284,13 @@ socket.on('new round', function(data){
 
 socket.on('white', function(data){
     if(somebodywon) return;
+=======
+    playedalready = false;
+    document.getElementById("1").innerHTML = data["black"];
+})
+
+socket.on('white', function(data){
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     let li = document.createElement('li');
     let divkarta = document.createElement('div');
     divkarta.classList.add("kartawhite");
@@ -224,6 +304,7 @@ socket.on('white', function(data){
 })
 
 socket.on('black', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
     playedalready = false;
     document.getElementById("1").innerHTML = data["black"];
@@ -232,13 +313,23 @@ socket.on('black', function(data){
 
 socket.on('drawblack', function(data){
     if(somebodywon) return;
+=======
+    playedalready = false;
+    document.getElementById("1").innerHTML = data["black"];
+})
+
+socket.on('drawblack', function(data){
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     console.log("herer");
     if(!owner){return;}
     socket.emit('black', {'room': room_id, 'black': blackcards.pop()});
 })
 
 socket.on('drawwhite', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     if(owner){
         socket.emit('drawnwhite', {'room': room_id, 'white': carddeck.pop()})
     }
@@ -246,7 +337,10 @@ socket.on('drawwhite', function(data){
 })
 
 socket.on('draw10white', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     if(owner){
         cards = []
         for(var i = 0; i < 10; i++){
@@ -258,7 +352,10 @@ socket.on('draw10white', function(data){
 })
 
 socket.on('10white', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     if(want10white){
         want10white = false;
         myhand = data['white'];
@@ -266,7 +363,10 @@ socket.on('10white', function(data){
 })
 
 socket.on('receivewhite', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     if(wantwhite){
         wantwhite = false;
         myhand.push(data['white'])
@@ -283,7 +383,10 @@ socket.on('receivewhite', function(data){
 })
 
 socket.on('flip playing field', function(){
+<<<<<<< HEAD
     if(somebodywon) return;
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     var counter = 0;
     var kek;
     while(roundwhites.length > 0){
@@ -293,7 +396,12 @@ socket.on('flip playing field', function(){
         kek.innerHTML = roundwhites.pop()
         kek.onclick = function(event){
             if(czar){
+<<<<<<< HEAD
                 console.log(kek.innerHTML)
+=======
+                console.log(myid)
+                console.log(last)
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
                 socket.emit('czarchoice', {'room': room_id, 'white': kek.innerHTML, 'new czar': (myid) % last});
                 czar = false
             }
@@ -302,6 +410,7 @@ socket.on('flip playing field', function(){
 })
 
 socket.on('czarchoice', function(data){
+<<<<<<< HEAD
     if(somebodywon) return;
     while(playingfield.children.length > 1){
         playingfield.lastChild.remove()
@@ -311,11 +420,19 @@ socket.on('czarchoice', function(data){
     if(mycard.localeCompare(data['white']) == 0){
         console.log('tuka sme weeeeee')
         socket.emit('cahme', {'id': myid, 'room': room_id})
+=======
+    while(playingfield.children.length > 1){
+        playingfield.lastChild.remove()
+    }
+    if(mycard == data['white']){
+        emit('cahme')
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     }
     playedalready = false;
 
 
 })
+<<<<<<< HEAD
 
 socket.on('newscore', function(data){
         if(somebodywon) return;
@@ -354,4 +471,8 @@ window.onbeforeunload = function(event){
     //if(czar)
     //    emit('czarleaving')
         window.location.replace("/")
+=======
+window.onbeforeunload = function(event){
+    window.location.replace("http://" + location.href.split("/")[2]);
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
 }

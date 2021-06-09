@@ -200,8 +200,13 @@ def on_join(data):
     room_id = data['room']
     join_room(room_id)
 
+<<<<<<< HEAD
     if data['lobby type'] == "cards against humanity":
         data['lobby type'] = "cah"
+=======
+    if data['lobby_type'] == "cards against humanity":
+        data['lobby_type'] = "cah"
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     curr_lobby = handleQueryLobbyType(data['lobby type'], data['room'] // 10)
     if curr_lobby.user2 is None and current_user.id == curr_lobby.user1:
         emit("you first", room=room_id)
@@ -216,8 +221,13 @@ def on_join(data):
 @socketio.on('move')
 def on_move(data):
     room_id = data['room']
+<<<<<<< HEAD
     if data['lobby type'] == "cards against humanity":
         data['lobby type'] = "cah"
+=======
+    if data['lobby_type'] == "cards against humanity":
+        data['lobby_type'] = "cah"
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     print(data['gameState'])
     data['gameState'] = "".join(data['gameState'])
     print(room_id)
@@ -234,9 +244,15 @@ def on_move(data):
 
 @socketio.on('win')
 def on_win(data):
+<<<<<<< HEAD
     user = current_user
     if data['lobby type'] == "cards against humanity":
         data['lobby type'] = "cah"
+=======
+    user = User.query.filter_by(username=data['player']).first()
+    if data['lobby_type'] == "cards against humanity":
+        data['lobby_type'] = "cah"
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     if data["lobby type"] == "tictactoe":
         user.score_tictactoe += 1
         user.score += 1
@@ -331,12 +347,21 @@ def on_playedwhite(data):
 
 @socketio.on('czarchoice')
 def on_czarchoice(data):
+<<<<<<< HEAD
     emit('czarchoice', {'white': data['white']}, room=data['room'])
+=======
+    emit('czarchoice', data['white'], room=data['room'])
+    curr_lobby = handleQueryLobbyType('cah', data['room'] // 10)
+    players = User.query.filter(
+        (User.id == curr_lobby.user1) | (User.id == curr_lobby.user2) | (User.id == curr_lobby.user3) | (
+                User.id == curr_lobby.user5) | (User.id == curr_lobby.user5)).all()
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
     print(data['new czar'])
     emit('czar', {'czar': data['new czar']}, room=data['room'])
     emit('drawblack', room=data['room'])
 
 
+<<<<<<< HEAD
 @socketio.on('nikoi ne igra deeba')
 def on_nikoineigradeeba(data):
     emit('czar', {'czar': data['new czar']}, room=data['room'])
@@ -347,6 +372,11 @@ def on_nikoineigradeeba(data):
 def on_daidaizbiram(data):
     emit('flip playing field', room=data['room'])
     emit('onq izbira', room=data['room'])
+=======
+@socketio.on('dai da izbiram')
+def on_daidaizbiram(data):
+    emit('flip playing field', room=data['room'])
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
 
 
 @socketio.on('want10white')
@@ -363,11 +393,14 @@ def on_10white(data):
 def on_drawnwhite(data):
     emit('receivewhite', {'white': data['white']}, room=data['room'])
 
+<<<<<<< HEAD
 
 @socketio.on('cahme')
 def on_cahme(data):
     emit('newscore', data, room=data['room'])
 
+=======
+>>>>>>> 0c0c004c8823b75160c37bb8a96228cf07c773c1
 
 if __name__ == '__main__':
     socketio.run(app)
